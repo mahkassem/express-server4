@@ -14,7 +14,7 @@ app.use(
     morgan('dev')
 )
 
-app.use(router)
+app.use("/api", router)
 
 app.listen(port, () => {
     console.log(`App listening at http://localhost:${port}`)
