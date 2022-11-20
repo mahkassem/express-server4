@@ -1,3 +1,4 @@
+import { UploadedFile } from 'express-fileupload'
 import fs from 'fs'
 import path from 'path'
 
@@ -11,4 +12,12 @@ const updateFileByNameService = (name: string, content: string): void => {
     fs.writeFileSync(path.join(basePath, name), content)
 }
 
-export { getFileByNameService, updateFileByNameService }
+const saveFileService = async (file: UploadedFile): Promise<string> => {
+    const timestamp = Date.now();
+    const filePath = `storage/${timestamp}_${file.name}`;
+    const fullPath = path.join(__dirname, '..', '..', filePath)
+    await file.mv(fullPath)
+    return filePath
+}
+
+export { getFileByNameService, updateFileByNameService, saveFileService }
